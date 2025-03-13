@@ -30,7 +30,7 @@ private:
     string room;
 
     // This solution uses COMPOSITION. 
-    // However, aggregation should be a better choice. 
+    // However, aggregation is a better choice. 
     // Consider replacing the roster with  vector<Student*> 
     vector<Student> students;
 
