@@ -28,11 +28,7 @@ class Course {
 private:
     string name;
     string room;
-
-    // This solution uses COMPOSITION. 
-    // However, aggregation is a better choice. 
-    // Consider replacing the roster with  vector<Student*> 
-    vector<Student> students;
+    vector<Student*> students;    //Aggregation Design
 
 public:
     Course(string name, string room) {
@@ -43,7 +39,7 @@ public:
         this->room = room;
     }
 
-    void addStudent(const Student& student) {
+    void addStudent(Student* student) {
         students.push_back(student);
     }
 
@@ -51,7 +47,7 @@ public:
         cout << "\nCourse: " << name << " (Room: " << room << ")\n";
         cout << "Enrolled Students:\n";
         for (const auto& student : students) {
-            student.display();
+            student->display();
         }
         cout << endl;
     }
@@ -64,12 +60,12 @@ int main() {
     vector<string> studentNames = { "Homer Simpson", "Bart Simpson", "Lisa Simpson", "Marge Simpson", "Maggie Simpson" };
     vector<int> studentIds = { 5678, 4444, 8888, 9000, 7777 };
 
-    vector<Student> vstudents;
+    vector<Student*> vstudents;
 
     //Try to create the Student objects, save them in a vector (vstudents)
     for (int i = 0; i < studentNames.size(); i++) {
         try {
-            Student s(studentNames[i], studentIds[i]);
+            Student* s = new Student(studentNames[i], studentIds[i]);
             vstudents.push_back(s);
         }
         catch (const exception& e) {
@@ -99,7 +95,7 @@ int main() {
     for (int i = 0; i < vstudents.size(); i++) {
         try
         {
-            Student s = vstudents[i];
+            Student* s = vstudents[i];
             c1.addStudent(s);
         }
         catch (const exception&)
@@ -112,8 +108,10 @@ int main() {
     //Showing final results
     c1.display();
 
+    //Cleaning up memory
+    for (auto s : vstudents) {
+        delete s;
+    }
+
     cout << "\nAll done!\n";
 }
-
-
-
