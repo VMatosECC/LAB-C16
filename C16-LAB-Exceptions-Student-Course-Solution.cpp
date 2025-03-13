@@ -28,6 +28,10 @@ class Course {
 private:
     string name;
     string room;
+
+    // This solution uses COMPOSITION. 
+    // However, aggregation should be a better choice. 
+    // Consider replacing the roster with  vector<Student*> 
     vector<Student> students;
 
 public:
